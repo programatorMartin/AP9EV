@@ -9,7 +9,7 @@ na problémoch **One-Max** (maximalizácia počtu jednotiek) a **Leading-Ones**
 
 Každá kombinácia problému a dimenzie bola spustená 10-krát. Limit bol
 100 × D vyhodnotení účelovej funkcie. Použité bolo rank výber, pravdepodobnosť
-kríženia 90 %, elitizmus 15 % a mutácia `max(0,8 %, 1/D)`. Veľkosť populácie
+kríženia 90 %, elitizmus 15 % a mutácia 1,0 %. Veľkosť populácie
 bola 30 pri D=10, 50 pri D=30 a 80 pri D=100. Náhodné semeno: 42.
 
 ## Výsledky
