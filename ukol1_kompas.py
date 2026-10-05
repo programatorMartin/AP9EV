@@ -55,7 +55,7 @@ def run_ga(
     fitness_fn,
     dim: int,
     pop_size: int = 50,
-    elitism_ratio: float = 0.1,
+    elitism_ratio: float = 0.15,
     crossover_rate: float = 0.9,
     mutation_rate: float = 0.01,
     selection_type: str = "rank",
@@ -120,7 +120,7 @@ def run_benchmark():
             pop_size = 30 if D == 10 else (50 if D == 30 else 80)
             elitism_ratio = 0.15
             crossover_rate = 0.9
-            mutation_rate = max(0.008, 1.0 / D)
+            mutation_rate = 0.01
             selection_type = "rank"
 
             final_results = []
@@ -167,6 +167,7 @@ def run_benchmark():
                 ax.legend(loc="lower right")
 
     plt.tight_layout()
+    plt.savefig("benchmark_results.png", dpi=300)
     plt.show()
 
 
