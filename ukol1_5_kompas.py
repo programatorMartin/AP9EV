@@ -10,9 +10,20 @@ def rosenbrock(x: np.ndarray) -> float:
 def schwefel(x: np.ndarray) -> float:
     return float(418.9829 * len(x) - np.sum(x * np.sin(np.sqrt(np.abs(x)))))
 
+def real_mutation_normal(individual: np.ndarray, mutation_rate: float, sigma: float = 1.0) -> np.ndarray:
+    mutated = individual.copy()
+    mask = np.random.rand(len(individual)) < mutation_rate
+    mutated[mask] += np.random.normal(0, sigma, size=np.sum(mask))
+    return mutated
+
+def real_mutation_uniform(individual: np.ndarray, mutation_rate: float, bounds: tuple) -> np.ndarray:
+    mutated = individual.copy()
+    mask = np.random.rand(len(individual)) < mutation_rate
+    mutated[mask] = np.random.uniform(bounds[0], bounds[1], size=np.sum(mask))
+    return mutated
+
 def onemax(individual: np.ndarray) -> int:
     return int(np.sum(individual))
-
 
 def leading_ones(individual: np.ndarray) -> int:
     count = 0
@@ -23,7 +34,6 @@ def leading_ones(individual: np.ndarray) -> int:
             break
     return count
 
-
 def roulette_wheel_selection(population: np.ndarray, fitness: np.ndarray) -> np.ndarray:
     total_fit = np.sum(fitness)
     if total_fit == 0:
@@ -33,14 +43,12 @@ def roulette_wheel_selection(population: np.ndarray, fitness: np.ndarray) -> np.
     idx = np.random.choice(len(population), p=probs)
     return population[idx].copy()
 
-
 def rank_selection(population: np.ndarray, fitness: np.ndarray) -> np.ndarray:
     n = len(fitness)
     ranks = np.argsort(np.argsort(fitness)) + 1
     probs = ranks / np.sum(ranks)
     idx = np.random.choice(n, p=probs)
     return population[idx].copy()
-
 
 def one_point_crossover(parent1: np.ndarray, parent2: np.ndarray, crossover_rate: float = 0.9):
     d = len(parent1)
@@ -51,13 +59,11 @@ def one_point_crossover(parent1: np.ndarray, parent2: np.ndarray, crossover_rate
         return child1, child2
     return parent1.copy(), parent2.copy()
 
-
 def bit_flip_mutation(individual: np.ndarray, mutation_rate: float) -> np.ndarray:
     mutation_mask = np.random.rand(len(individual)) < mutation_rate
     mutated = individual.copy()
     mutated[mutation_mask] = 1 - mutated[mutation_mask]
     return mutated
-
 
 def run_ga(
     fitness_fn,
@@ -110,7 +116,6 @@ def run_ga(
         fitness_history.append(current_best)
 
     return current_best, np.array(eval_history), np.array(fitness_history)
-
 
 def run_benchmark():
     dimensions = [10, 30, 100]
@@ -177,7 +182,6 @@ def run_benchmark():
     plt.tight_layout()
     plt.savefig("benchmark_results.png", dpi=300)
     plt.show()
-
 
 if __name__ == "__main__":
     np.random.seed(42)
