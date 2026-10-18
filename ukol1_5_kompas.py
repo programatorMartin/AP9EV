@@ -10,6 +10,11 @@ def rosenbrock(x: np.ndarray) -> float:
 def schwefel(x: np.ndarray) -> float:
     return float(418.9829 * len(x) - np.sum(x * np.sin(np.sqrt(np.abs(x)))))
 
+def decode_fixed_point(bits: np.ndarray, bounds: tuple) -> float:
+    integer_val = int("".join(bits.astype(str)), 2)
+    max_int = (1 << 32) - 1
+    return bounds[0] + (bounds[1] - bounds[0]) * (integer_val / max_int)
+
 def real_mutation_normal(individual: np.ndarray, mutation_rate: float, sigma: float = 1.0) -> np.ndarray:
     mutated = individual.copy()
     mask = np.random.rand(len(individual)) < mutation_rate
