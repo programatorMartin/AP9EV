@@ -1,6 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+def sphere(x: np.ndarray) -> float:
+    return float(np.sum(x**2))
+
+def rosenbrock(x: np.ndarray) -> float:
+    return float(np.sum(100.0 * (x[1:] - x[:-1]**2)**2 + (1 - x[:-1])**2))
+
+def schwefel(x: np.ndarray) -> float:
+    return float(418.9829 * len(x) - np.sum(x * np.sin(np.sqrt(np.abs(x)))))
 
 def onemax(individual: np.ndarray) -> int:
     return int(np.sum(individual))
